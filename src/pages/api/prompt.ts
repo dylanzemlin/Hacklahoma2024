@@ -26,7 +26,7 @@ type Data = {
   response: string;
 };
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest<Data>,
     res: NextApiResponse<Data>,
 ) {
