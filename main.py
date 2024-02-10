@@ -8,7 +8,7 @@ client = OpenAI()
 
 personality_msg = {
     "role": "system", # to modify the behavior of the assistant
-    "content": "You are Rosie from The Jetsons."
+    "content": "You are Rosie from The Jetsons." #this could probably be a lot better
 }
 
 
