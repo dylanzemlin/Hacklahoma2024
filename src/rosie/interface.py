@@ -15,10 +15,18 @@ class Face(Enum):
 
 class FaceLcdWriter():
     def __init__(self):
-        self.face_serial = serial.Serial(FACE_PORT, BAUD_RATE, timeout=1) # we might need to close this at some point
-        self.lcd_serial = serial.Serial(LCD_PORT, BAUD_RATE, timeout=1) # same
+        try:
+            self.face_serial = serial.Serial(FACE_PORT, BAUD_RATE, timeout=1) # we might need to close this at some point
+            self.lcd_serial = serial.Serial(LCD_PORT, BAUD_RATE, timeout=1) # same
+        except Exception as e:
+            self.face_serial = None
+            self.lcd_serial = None
+            print(e)
     
     def open(self):
+        if self.face_serial is None or self.lcd_serial is None:
+            return
+        
         try:
             self.face_serial.open()
             self.lcd_serial.open()
@@ -29,6 +37,9 @@ class FaceLcdWriter():
             print(e)
     
     def close(self):
+        if self.face_serial is None or self.lcd_serial is None:
+            return
+        
         try:
             self.face_serial.close()
             self.lcd_serial.close()
@@ -36,12 +47,18 @@ class FaceLcdWriter():
             print(e)
 
     def write_face(self, face):
+        if self.face_serial is None:
+            return
+        
         try:
             self.face_serial.write(bytes(str(face).removeprefix("Face.").lower() + "\r\n", "utf8"))
         except Exception as e:
             print(e)
 
     def write_lcd(self, msg):
+        if self.lcd_serial is None:
+            return
+        
         # text = msg.split(" ")
         # output = " ".join(text)
         # chunkSize = 5
