@@ -1,5 +1,6 @@
 #! python3.7
 import socket
+import time
 
 HOST = "24.144.83.34"
 PORT = 62431
@@ -13,6 +14,7 @@ def main():
     sock.connect((HOST, PORT))
     type_message = "MICROPHONE"
     sock.sendall(type_message.encode())
+    time.sleep(1)
     sock.sendall(b"DEMO_MSG")
 
 
