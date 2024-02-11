@@ -31,7 +31,7 @@ def record_callback(_, audio:sr.AudioData) -> None:
 def main():
     # We use SpeechRecognizer to record our audio because it has a nice feature where it can detect when speech ends.
     recorder = sr.Recognizer()
-    recorder.energy_threshold = 150
+    recorder.energy_threshold = 600
 
     source = sr.Microphone(sample_rate=24000)
     with source:
