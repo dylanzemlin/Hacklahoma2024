@@ -17,8 +17,8 @@ sock.sendall(type_message.encode())
 def main():
     global sock
     tts = TTS()
-    writer = FaceLcdWriter()
-    writer.open()
+    # writer = FaceLcdWriter()
+    # writer.open()
     while True:
         try:
             data = sock.recv(1024 * 1024)
@@ -26,10 +26,11 @@ def main():
                 break
             decoded = data.decode()
             print(decoded)
-            writer.write_face(Face.SPEAK)
-            writer.write_lcd(decoded)
-            tts.speak(decoded)
-            writer.write_face(Face.NOSPEAK)
+            
+            # writer.write_face(Face.SPEAK)
+            # writer.write_lcd(decoded)
+            # tts.speak(decoded)
+            # writer.write_face(Face.NOSPEAK)
 
             
             # Write data to a file and play it (.mp3)
@@ -42,7 +43,7 @@ def main():
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
-            writer.close()
+            # writer.close()
             break
 
 
