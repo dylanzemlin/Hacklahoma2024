@@ -21,7 +21,7 @@ def main():
     # writer.open()
     while True:
         try:
-            data = sock.recv(1024 * 1024)
+            data = sock.recv(1024 * 1024 * 4)
             if not data:
                 break
             # decoded = data.decode()
