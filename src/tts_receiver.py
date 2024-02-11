@@ -1,6 +1,7 @@
 #! python3.7
 import socket
 from rosie.tts import TTS
+from rosie.interface import Face, FaceLcdWriter
 
 
 HOST = "24.144.83.34"
@@ -15,6 +16,8 @@ sock.sendall(type_message.encode())
 
 def main():
     global sock
+    tts = TTS()
+    writer = FaceLcdWriter()
     while True:
         try:
             data = sock.recv(1024 * 1024)
@@ -22,7 +25,11 @@ def main():
                 break
             decoded = data.decode()
             print(decoded)
-            TTS().speak(decoded)
+            writer.write_face(Face.SPEAK)
+            writer.write_lcd(decoded)
+            tts.speak(decoded)
+            writer.write_face(Face.NOSPEAK)
+
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
