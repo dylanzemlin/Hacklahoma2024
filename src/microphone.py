@@ -33,7 +33,10 @@ def main():
     recorder = sr.Recognizer()
     recorder.energy_threshold = 150
 
-    source = sr.Microphone(sample_rate=2400)
+    mic = "HyperX Quadcast: USB Audio (hw:1,0)"
+    all_mics = sr.Microphone.list_microphone_names()
+    mic_idx = all_mics.index(mic)
+    source = sr.Microphone(sample_rate=24000, device_index=mic_idx)
     with source:
         recorder.adjust_for_ambient_noise(source, duration = 1)
 
