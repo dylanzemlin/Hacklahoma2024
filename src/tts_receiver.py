@@ -24,8 +24,8 @@ def main():
             data = sock.recv(1024 * 1024)
             if not data:
                 break
-            decoded = data.decode()
-            print(decoded)
+            # decoded = data.decode()
+            # print(decoded)
             
             # writer.write_face(Face.SPEAK)
             # writer.write_lcd(decoded)
