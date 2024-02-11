@@ -17,7 +17,12 @@ def microphone_client(connection, address):
     print(f"Received connection from {address}")
     with connection:
         while not microphone_die:
-            data = connection.recv(1024 * 1024)
+            data = None
+            try:
+                data = connection.recv(1024 * 1024)
+            except Exception as e:
+                print(f"Failed to receive data from {address}: {e}")
+                break
             if not data:
                 break
             print(f"Received {len(data)} bytes from {address}")
