@@ -29,7 +29,16 @@ def main():
         """
         # Grab the raw bytes and push it into the thread safe queue.
         data = audio.get_raw_data()
-        sock.sendto(data, (HOST, PORT))
+        try:
+            sock.sendto(data, (HOST, PORT))
+        except Exception as e:
+            print(f"Failed to send data to {HOST}:{PORT}: {e}")
+            try:
+                sock.connect((HOST, PORT))
+                type_message = "MICROPHONE"
+                sock.sendall(type_message.encode())
+            except Exception as e:
+                print(f"Failed to reconnect to {HOST}:{PORT}: {e}")
         
 
     # Create a background thread that will pass us raw audio bytes.
