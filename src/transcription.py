@@ -14,6 +14,7 @@ from rosie.chat import Rosie
 from rosie.tts import TTS
 import struct
 import pickle, pyaudio, wave
+from pydub import AudioSegment
 
 
 HOST = "24.144.83.34"
@@ -121,12 +122,15 @@ def main():
                         TTS().speak(response)
                         sleep(1)
                         # Send "temp.mp3" to sock2
-                        wv = wave.open("temp.mp3", "rb")
+                        sound = AudioSegment.from_mp3("temp.mp3")
+                        sound.export("temp.wav", format="wav")
+                        wv = wave.open("temp.wav", "rb")
                         p = pyaudio.PyAudio()
                         strm = p.open(format=p.get_format_from_width(wv.getsampwidth()),
                                       channels=wv.getnchannels(),
                                       rate=wv.getframerate(),
-                                      input=True)
+                                      input=True,
+                                      frames_per_buffer=1024)
                         while True:
                             data = wv.readframes(1024)
                             if not data:
