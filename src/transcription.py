@@ -11,6 +11,7 @@ from time import sleep
 from sys import platform
 import threading
 from rosie.chat import Rosie
+from rosie.tts import TTS
 
 
 HOST = "24.144.83.34"
@@ -115,7 +116,12 @@ def main():
                         response = rose.get_response(line)
                         print(f"Rosie: {response}")
                         print(sock2)
-                        sock2.sendall(response.encode())
+                        TTS().speak(response)
+                        with open("temp.mp3", "rb") as f:
+                            data = f.read(1024 * 1024)
+                            while data:
+                                sock2.sendall(data)
+                                data = f.read(1024 * 1024)
                         transcription = ['']
 
                 sleep(0.25)

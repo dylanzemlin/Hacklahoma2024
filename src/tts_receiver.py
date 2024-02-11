@@ -1,6 +1,5 @@
 #! python3.7
 import socket
-from rosie.tts import TTS
 
 
 HOST = "24.144.83.34"
@@ -20,9 +19,14 @@ def main():
             data = sock.recv(1024 * 1024)
             if not data:
                 break
-            decoded = data.decode()
-            print(decoded)
-            TTS().speak(decoded)
+            
+            # Write data to a file and play it (.mp3)
+            with open("temp.mp3", "wb") as f:
+                f.write(data)
+                
+            # Play the file
+            import os
+            os.system("mpg123 temp.mp3")
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()

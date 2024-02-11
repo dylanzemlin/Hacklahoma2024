@@ -10,5 +10,5 @@ class TTS:
         self.engine.setProperty('voice', voices[1].id)
 
     def speak(self, msg):
-        self.engine.say(msg)
+        self.engine.save_to_file(msg, 'temp.mp3')
         self.engine.runAndWait()
