@@ -67,11 +67,13 @@ def listen_for_data():
                 forward_client = conn
                 print(f"Forwarding set to {addr}")
                 continue
-                
         except KeyboardInterrupt:
             print("Shutting down...")
             sock.close()
             break
+        except Exception as e:
+            print(f"Error: {e}")
+            continue
 
 def main():
     listen_for_data()
