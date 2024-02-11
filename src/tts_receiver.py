@@ -1,5 +1,5 @@
 #! python3.7
-import socket, os
+import socket, openai, os
 
 HOST = "24.144.83.34"
 PORT = 65433
@@ -11,6 +11,9 @@ type_message = "TEXTTOSPEECH"
 sock.sendall(type_message.encode())
 
 
+client = openai.OpenAI()
+
+
 def main():
     global sock
     while True:
@@ -18,6 +21,16 @@ def main():
             response = sock.recv(1024 * 1024)
             decoded_response = response.decode()
             print(decoded_response)
+            
+            response = client.audio.speech.create(
+                model = "tts-1",
+                voice = "nova",
+                input = decoded_response
+            )
+            response.write_to_file("output.mp3")
+            
+            os.system("mpg123 output.mp3")
+            
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
