@@ -16,6 +16,10 @@ from time import sleep
 from sys import platform
 import threading
 
+import os
+from dotenv import dotenv_values
+cfg = dotenv_values(".env")
+
 
 import socket
 
@@ -29,7 +33,7 @@ class Rosie():
         # https://platform.openai.com/docs/guides/text-generation/chat-completions-api
 
         # create the client
-        self.client = OpenAI(api_key = "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")
+        self.client = OpenAI(api_key = cfg.get("OPENAI_API_KEY"))
 
         self.personality_msg = {
             "role": "assistant", # to modify the behavior of the assistant
