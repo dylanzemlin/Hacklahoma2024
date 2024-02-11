@@ -25,6 +25,9 @@ def main():
         try:
             response = sock.recv(1024 * 1024)
             decoded_response = response.decode()
+            if decoded_response == "" or decoded_response == "\n" or decoded_response == "\r\n" or decoded_response == "\r":
+                continue
+            
             decoded_response = "Hey kid. " + decoded_response
             print(decoded_response)
 
