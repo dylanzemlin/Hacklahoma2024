@@ -1,5 +1,5 @@
 #! python3.7
-import socket, openai, os, time
+import socket, openai, os, time, pyglet
 
 HOST = "24.144.83.34"
 PORT = 65433
@@ -29,7 +29,10 @@ def main():
             )
             response.write_to_file("output.mp3")
             time.sleep(0.75)
-            os.system("mpg123 output.mp3")
+            sound = pyglet.media.load("output.mp3", streaming=False)
+            sound.play()
+            time.sleep(sound.duration)
+            os.remove("output.mp3")
             
         except KeyboardInterrupt:
             print("Exiting...")
