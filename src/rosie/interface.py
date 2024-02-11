@@ -22,7 +22,7 @@ class FaceLcdWriter():
         self.face_serial.open()
         self.lcd_serial.open()
     
-    def close(self)
+    def close(self):
         self.face_serial.close()
         self.lcd_serial.close()
 
