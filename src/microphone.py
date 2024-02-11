@@ -11,6 +11,7 @@ type_message = "MICROPHONE"
 sock.sendall(type_message.encode())
 
 def main():
+    global sock
     # We use SpeechRecognizer to record our audio because it has a nice feature where it can detect when speech ends.
     recorder = sr.Recognizer()
     recorder.energy_threshold = 500
@@ -23,6 +24,7 @@ def main():
         recorder.adjust_for_ambient_noise(source)
 
     def record_callback(_, audio:sr.AudioData) -> None:
+        global sock
         """
         Threaded callback function to receive audio data when recordings finish.
         audio: An AudioData containing the recorded bytes.
