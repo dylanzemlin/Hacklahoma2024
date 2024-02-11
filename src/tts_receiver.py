@@ -2,6 +2,7 @@
 import socket
 from rosie.tts import TTS
 from rosie.interface import Face, FaceLcdWriter
+import time
 
 
 HOST = "24.144.83.34"
@@ -17,20 +18,38 @@ sock.sendall(type_message.encode())
 def main():
     global sock
     tts = TTS()
-    # writer = FaceLcdWriter()
-    # writer.open()
+    writer = FaceLcdWriter()
+    writer.open()
     while True:
         try:
             data = sock.recv(1024)
             if not data:
                 break
-            # decoded = data.decode()
-            # print(decoded)
+            decoded = data.decode()
+            print(decoded)
             
-            # writer.write_face(Face.SPEAK)
-            # writer.write_lcd(decoded)
-            # tts.speak(decoded)
-            # writer.write_face(Face.NOSPEAK)
+            # this can just carry on in the background or something idk
+            writer.write_lcd(decoded)
+
+            # start the speak
+            tts.speak(decoded)
+            tts.engine.startLoop()
+
+            # loop and do face stuff while its speaking
+            lasttime = time.time()
+            toggle = False
+            while tts.engine.isBusy():
+                writer.write_face(Face.TALKFACE if toggle else Face.NOTALKFACE)
+
+                # flip face every quarter second
+                if time.time() - lasttime > 0.25:
+                    lasttime = time.time()
+                    toggle = not toggle 
+
+                tts.engine.iterate()
+
+            tts.engine.endLoop()
+            writer.write_face(Face.NOTALKFACE)
 
             
             # Write to "temp.mp3" until b"DONE"
@@ -47,7 +66,7 @@ def main():
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
-            # writer.close()
+            writer.close()
             break
 
 
