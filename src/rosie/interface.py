@@ -23,6 +23,9 @@ class FaceLcdWriter():
     def open(self):
         self.face_serial.open()
         # self.lcd_serial.open()
+
+        self.face_serial.write(b"fliph") # this is necessary for face specifically to get everything set up
+        time.sleep(0.1)
     
     def close(self):
         self.face_serial.close()
