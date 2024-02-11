@@ -33,7 +33,7 @@ def main():
             
             response = client.audio.speech.create(
                 model = "tts-1",
-                voice = "nova",
+                voice = "shimmer",
                 input = decoded_response
             )
     
