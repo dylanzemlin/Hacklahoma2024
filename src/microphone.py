@@ -10,8 +10,25 @@ sock.connect((HOST, PORT))
 type_message = "MICROPHONE"
 sock.sendall(type_message.encode())
 
-def main():
+def record_callback(_, audio:sr.AudioData) -> None:
     global sock
+    # Grab the raw bytes and push it into the thread safe queue.
+    data = audio.get_raw_data()
+    try:
+        sock.sendto(data, (HOST, PORT))
+    except Exception as e:
+        print(f"Failed to send data to {HOST}:{PORT}: {e}")
+        try:
+            sock.close()
+            
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect((HOST, PORT))
+            type_message = "MICROPHONE"
+            sock.sendall(type_message.encode())
+        except Exception as e:
+            print(f"Failed to reconnect to {HOST}:{PORT}: {e}")
+
+def main():
     # We use SpeechRecognizer to record our audio because it has a nice feature where it can detect when speech ends.
     recorder = sr.Recognizer()
     recorder.energy_threshold = 500
@@ -22,29 +39,6 @@ def main():
     source = sr.Microphone(sample_rate=16000)
     with source:
         recorder.adjust_for_ambient_noise(source)
-
-    def record_callback(_, audio:sr.AudioData) -> None:
-        global sock
-        """
-        Threaded callback function to receive audio data when recordings finish.
-        audio: An AudioData containing the recorded bytes.
-        """
-        # Grab the raw bytes and push it into the thread safe queue.
-        data = audio.get_raw_data()
-        try:
-            sock.sendto(data, (HOST, PORT))
-        except Exception as e:
-            print(f"Failed to send data to {HOST}:{PORT}: {e}")
-            try:
-                sock.close()
-                
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock.connect((HOST, PORT))
-                type_message = "MICROPHONE"
-                sock.sendall(type_message.encode())
-            except Exception as e:
-                print(f"Failed to reconnect to {HOST}:{PORT}: {e}")
-        
 
     # Create a background thread that will pass us raw audio bytes.
     recorder.listen_in_background(source, record_callback, phrase_time_limit=3.5)
