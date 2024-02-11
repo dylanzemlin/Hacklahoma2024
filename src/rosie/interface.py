@@ -3,7 +3,7 @@ from enum import Enum
 import time
 
 BAUD_RATE = 9600
-FACE_PORT = "usb"
+FACE_PORT = "/dev/ttyUSB0"
 LCD_PORT = "/dev/ttyACM0"
 
 class Face(Enum):
