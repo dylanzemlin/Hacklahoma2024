@@ -1,1 +1,1 @@
-python3 src/relay_server.py --listen_port=65433 --transmit_type=RESPONSE --receive_type=TEXTTOSPEECH
+python3 src/relay_server.py --listen_port=66433 --transmit_type=RESPONSE --receive_type=TEXTTOSPEECH

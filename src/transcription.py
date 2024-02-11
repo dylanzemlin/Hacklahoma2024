@@ -19,12 +19,12 @@ import os
 
 
 HOST = "24.144.83.34"
-PORT = 65431
-WAKE_WORDS = ["hey rosy", "hey rosie", "hey rosey"]
+PORT = 67431
+WAKE_WORDS = ["hey rosy", "hey rosie", "hey rosey", "rosy", "rosie", "rosy"]
 
 
 TARGET_HOST = "24.144.83.34"
-TARGET_PORT = 65433
+TARGET_PORT = 66433
 
 
 sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,7 +37,7 @@ def main():
     global sock2
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="medium", help="Model to use", choices=["tiny", "base", "small", "medium", "large"])
+    parser.add_argument("--model", default="small", help="Model to use", choices=["tiny", "base", "small", "medium", "large"])
     parser.add_argument("--energy_threshold", default=1000,help="Energy level for mic to detect.", type=int)
     parser.add_argument("--phrase_timeout", default=3, help="How much empty space between recordings before we consider it a new line in the transcription.", type=float)
     if 'linux' in platform:
@@ -122,6 +122,7 @@ def main():
                         sock2.sendall(response.encode())
                                 
                         transcription = ['']
+                    print(line)
 
                 sleep(0.25)
         except KeyboardInterrupt:

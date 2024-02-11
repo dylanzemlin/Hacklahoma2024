@@ -4,7 +4,7 @@ from rosie.interface import Face, FaceLcdWriter
 
 
 HOST = "24.144.83.34"
-PORT = 65433
+PORT = 66433
 
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
