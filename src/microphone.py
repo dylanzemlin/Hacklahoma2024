@@ -31,20 +31,17 @@ def record_callback(_, audio:sr.AudioData) -> None:
 def main():
     # We use SpeechRecognizer to record our audio because it has a nice feature where it can detect when speech ends.
     recorder = sr.Recognizer()
-    recorder.energy_threshold = 300
+    recorder.energy_threshold = 150
     
     # Definitely do this, dynamic energy compensation lowers the energy threshold dramatically to a point where the SpeechRecognizer never stops recording.
     recorder.dynamic_energy_threshold = False
 
-    all_sources = sr.Microphone.list_microphone_names()
-    # Find index of "default" microphone
-    # default_index = all_sources.index("default")
-    source = sr.Microphone(sample_rate=3200)
-    # with source:
-        # recorder.adjust_for_ambient_noise(source)
+    source = sr.Microphone(sample_rate=2400)
+    with source:
+        recorder.adjust_for_ambient_noise(source, duration = 1)
 
     # Create a background thread that will pass us raw audio bytes.
-    recorder.listen_in_background(source, record_callback, phrase_time_limit=3.5)
+    recorder.listen_in_background(source, record_callback, phrase_time_limit=3)
     
     while True:
         try:
