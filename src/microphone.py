@@ -38,10 +38,10 @@ def main():
 
     all_sources = sr.Microphone.list_microphone_names()
     # Find index of "default" microphone
-    default_index = all_sources.index("default")
-    source = sr.Microphone(sample_rate=1600, device_index=default_index)
-    with source:
-        recorder.adjust_for_ambient_noise(source)
+    # default_index = all_sources.index("default")
+    source = sr.Microphone(sample_rate=3200)
+    # with source:
+        # recorder.adjust_for_ambient_noise(source)
 
     # Create a background thread that will pass us raw audio bytes.
     recorder.listen_in_background(source, record_callback, phrase_time_limit=3.5)
