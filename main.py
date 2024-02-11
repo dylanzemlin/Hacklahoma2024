@@ -40,4 +40,10 @@ class TTS:
 
     def speak(self, msg):
         self.engine.say(msg)
-        self.engine.runAndWait()
+        self.engine.runAndWait() # this is blocking yes
+
+# tts = TTS()
+
+# print('starting')
+# tts.speak("this is a test")
+# print('done')
