@@ -33,7 +33,7 @@ def main():
     recorder = sr.Recognizer()
     recorder.energy_threshold = 3200
 
-    source = sr.Microphone(sample_rate=24000)
+    source = sr.Microphone(sample_rate=16000)
     with source:
         recorder.adjust_for_ambient_noise(source, duration = 3)
 
