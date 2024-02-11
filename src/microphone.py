@@ -1,6 +1,5 @@
 #! python3.7
 import speech_recognition as sr
-from queue import Queue
 import time
 import socket
 
@@ -34,7 +33,6 @@ def main():
         
 
     # Create a background thread that will pass us raw audio bytes.
-    # We could do this manually but SpeechRecognizer provides a nice helper.
     recorder.listen_in_background(source, record_callback, phrase_time_limit=3.5)
     
     while True:
