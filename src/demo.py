@@ -10,7 +10,7 @@ def main():
     sock.connect((HOST, PORT))
     type_message = "RESPONSE"
     sock.sendall(type_message.encode())
-    time.sleep(1)
+    time.sleep(3)
     sock.sendall("Hi, I am Rosie, your personal assistant. How can I help you today?".encode())
 
 
