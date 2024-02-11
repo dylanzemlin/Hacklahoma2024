@@ -8,7 +8,7 @@ LCD_PORT = "/dev/ttyACM0"
 
 class Face(Enum):
     TALKFACE = "talkface"
-    NOTALKFACE = "notalkface"
+    NOTALKFACE = "smile"
     SAD = "sad"
     SMILE = "smile"
 
