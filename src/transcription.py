@@ -65,6 +65,9 @@ def main():
             data = sock.recv(1024 * 1024)
             if not data:
                 break
+            if data == b"DEMO_MSG":
+                sock2.sendall("Hi, I am Rosie, your personal assistant. Please ask me any questions you may have!".encode())
+                continue
             data_queue.put(data)
 
     speech_thread = threading.Thread(target=record_callback, args=())
