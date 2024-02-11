@@ -54,7 +54,7 @@ def main():
                 writer.write_face(Face.TALKFACE if toggle else Face.NOTALKFACE)
 
                 # flip face every quarter second
-                if time.time() - lasttime > 0.25:
+                if time.time() - lasttime > sound.duration / 6:
                     lasttime = time.time()
                     toggle = not toggle 
 
