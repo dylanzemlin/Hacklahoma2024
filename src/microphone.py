@@ -36,7 +36,10 @@ def main():
     # Definitely do this, dynamic energy compensation lowers the energy threshold dramatically to a point where the SpeechRecognizer never stops recording.
     recorder.dynamic_energy_threshold = False
 
-    source = sr.Microphone(sample_rate=1600, device_index=2)
+    all_sources = sr.Microphone.list_microphone_names()
+    # Find index of "default" microphone
+    default_index = all_sources.index("default")
+    source = sr.Microphone(sample_rate=1600, device_index=default_index)
     with source:
         recorder.adjust_for_ambient_noise(source)
 
