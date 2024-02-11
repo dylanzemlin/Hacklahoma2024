@@ -11,7 +11,7 @@ def main():
     type_message = "RESPONSE"
     sock.sendall(type_message.encode())
     time.sleep(1)
-    sock.sendall(b"Hi, I am Rosie, your personal assistant. How can I help you today?")
+    sock.sendall("Hi, I am Rosie, your personal assistant. How can I help you today?".encode())
 
 
 if __name__ == "__main__":
