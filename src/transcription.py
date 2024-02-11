@@ -22,9 +22,17 @@ TARGET_HOST = "24.144.83.34"
 TARGET_PORT = 65433
 
 
+sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock2.connect((TARGET_HOST, TARGET_PORT))
+type_message = "RESPONSE"
+sock2.sendall(type_message.encode())
+
+
 def main():
+    global sock2
+    
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="medium", help="Model to use", choices=["tiny", "base", "small", "medium", "large"])
+    parser.add_argument("--model", default="small", help="Model to use", choices=["tiny", "base", "small", "medium", "large"])
     parser.add_argument("--energy_threshold", default=1000,help="Energy level for mic to detect.", type=int)
     parser.add_argument("--phrase_timeout", default=3, help="How much empty space between recordings before we consider it a new line in the transcription.", type=float)
     if 'linux' in platform:
@@ -45,7 +53,6 @@ def main():
     def record_callback() -> None:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((HOST, PORT))
-        
         type_message = "TRANSCRIBER"
         sock.sendall(type_message.encode())
         
@@ -61,9 +68,6 @@ def main():
 
     # Cue the user that we're ready to go.
     print("Model loaded.\n")
-    
-    target_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    target_socket.connect((TARGET_HOST, TARGET_PORT))
 
     while True:
         try:
@@ -109,13 +113,14 @@ def main():
                         print(f"User: {line}")
                         rose = Rosie()
                         response = rose.get_response(line)
-                        target_socket.sendall(response.encode())
+                        print(f"Rosie: {response}")
+                        print(sock2)
+                        sock2.sendall(response.encode())
+                        transcription = ['']
 
                 sleep(0.25)
         except KeyboardInterrupt:
             break
-        
-        target_socket.close()
 
 
 if __name__ == "__main__":
