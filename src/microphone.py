@@ -34,6 +34,9 @@ def main():
         except Exception as e:
             print(f"Failed to send data to {HOST}:{PORT}: {e}")
             try:
+                sock.close()
+                
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock.connect((HOST, PORT))
                 type_message = "MICROPHONE"
                 sock.sendall(type_message.encode())
