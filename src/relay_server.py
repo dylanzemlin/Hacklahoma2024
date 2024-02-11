@@ -31,7 +31,6 @@ def microphone_client(connection, address):
                 try:
                     forward_client.sendall(data)
                 except Exception as e:
-                    print(f"Failed to forward data to {forward_client.getpeername()}: {e}")
                     forward_ready = False
                     forward_client = None
                     break
