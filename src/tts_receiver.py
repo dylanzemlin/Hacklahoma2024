@@ -19,7 +19,7 @@ client = openai.OpenAI()
 def main():
     global sock
     writer = FaceLcdWriter()
-    writer.opem()
+    writer.open()
     
     while True:
         try:
