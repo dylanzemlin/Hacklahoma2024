@@ -4,7 +4,7 @@ import argparse
 
 # Configuration for the relay
 listen_addr = "0.0.0.0"
-listen_port = 67431
+listen_port = 62431
 forward_client = None
 forward_ready = False
 microphone_thread = None
@@ -85,7 +85,7 @@ def main():
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Relay server for Whisper")
     argparser.add_argument("--listen_addr", default="0.0.0.0", help="Address to listen on", type=str)
-    argparser.add_argument("--listen_port", default=67431, help="Port to listen on", type=int)
+    argparser.add_argument("--listen_port", default=62431, help="Port to listen on", type=int)
     argparser.add_argument("--transmit_type", default="MICROPHONE", help="Type of data to transmit", type=str)
     argparser.add_argument("--receive_type", default="TRANSCRIBER", help="Type of data to receive", type=str)
     

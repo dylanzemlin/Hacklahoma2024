@@ -4,7 +4,7 @@ import time
 import socket
 
 HOST = "24.144.83.34"
-PORT = 67431
+PORT = 62431
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
 type_message = "MICROPHONE"

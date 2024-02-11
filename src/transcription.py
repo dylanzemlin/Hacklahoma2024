@@ -19,12 +19,12 @@ import os
 
 
 HOST = "24.144.83.34"
-PORT = 67431
+PORT = 62431
 WAKE_WORDS = ["hey rosy", "hey rosie", "hey rosey", "rosy", "rosie", "rosy"]
 
 
 TARGET_HOST = "24.144.83.34"
-TARGET_PORT = 66433
+TARGET_PORT = 62433
 
 
 sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
