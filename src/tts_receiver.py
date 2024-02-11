@@ -20,6 +20,7 @@ def main():
         try:
             response = sock.recv(1024 * 1024)
             decoded_response = response.decode()
+            decoded_response = "Hey kid. " + decoded_response
             print(decoded_response)
             
             response = client.audio.speech.create(
