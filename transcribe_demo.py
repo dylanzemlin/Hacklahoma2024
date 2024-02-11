@@ -20,7 +20,6 @@ import os
 from dotenv import dotenv_values
 cfg = dotenv_values(".env")
 
-
 import socket
 
 HOST = "24.144.83.34"
@@ -43,7 +42,7 @@ class Rosie():
     
     def get_response(self, question: str) -> str:
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 self.personality_msg,
                 {"role":"user", "content": question}
@@ -63,9 +62,10 @@ class TTS:
         self.engine.setProperty('volume', 1.0)    # setting up volume level  between 0 and 1
         
         voices = self.engine.getProperty('voices')       #getting details of current voice   
-        for idx, voice in enumerate(voices):
-            if "hazel" in voice.name.lower():
-                self.engine.setProperty('voice', voices[idx].id)
+        self.engine.setProperty('voice', voices[1].id)
+        # for idx, voice in enumerate(voices):
+        #     if "hazel" in voice.name.lower():
+        #         self.engine.setProperty('voice', voices[idx].id)
 
     def speak(self, msg):
         # self.engine.save_to_file(msg, "response.mp3")
