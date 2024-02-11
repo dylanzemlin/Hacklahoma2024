@@ -21,7 +21,7 @@ def main():
     # writer.open()
     while True:
         try:
-            data = sock.recv(1024 * 1024 * 4)
+            data = sock.recv(1024)
             if not data:
                 break
             # decoded = data.decode()
@@ -33,9 +33,13 @@ def main():
             # writer.write_face(Face.NOSPEAK)
 
             
-            # Write data to a file and play it (.mp3)
+            # Write to "temp.mp3" until b"DONE"
             with open("temp.mp3", "wb") as f:
-                f.write(data)
+                while True:
+                    f.write(data)
+                    data = sock.recv(1024)
+                    if data == b"DONE":
+                        break
                 
             # Play the file
             import os

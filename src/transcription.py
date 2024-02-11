@@ -117,11 +117,15 @@ def main():
                         print(f"Rosie: {response}")
                         print(sock2)
                         TTS().speak(response)
+                        # Send "temp.mp3" to sock2
                         with open("temp.mp3", "rb") as f:
-                            data = f.read(1024 * 1024 * 4)
+                            # Send 1024 bytes at a time. send "DONE" when done
+                            data = f.read(1024)
                             while data:
                                 sock2.sendall(data)
-                                data = f.read(1024 * 1024 * 4)
+                                data = f.read(1024)
+                                
+                            sock2.sendall("DONE".encode())
                         transcription = ['']
 
                 sleep(0.25)
