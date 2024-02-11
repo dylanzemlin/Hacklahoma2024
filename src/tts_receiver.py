@@ -15,16 +15,9 @@ def main():
     global sock
     while True:
         try:
-            # Read in temp.mp3 as 1024 * 1024 * 128 bytes
-            data = sock.recv(1024 * 1024 * 128)
-            if not data:
-                break
-            print("Received data")
-            with open("temp.mp3", "wb") as f:
-                f.write(data)
-                
-            # Play the audio
-            os.system("mpg123 temp.mp3")
+            response = sock.recv(1024 * 1024)
+            decoded_response = response.decode()
+            print(decoded_response)
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
