@@ -1,5 +1,5 @@
 #! python3.7
-import socket, openai, os
+import socket, openai, os, time
 
 HOST = "24.144.83.34"
 PORT = 65433
@@ -28,7 +28,7 @@ def main():
                 input = decoded_response
             )
             response.write_to_file("output.mp3")
-            
+            time.sleep(0.75)
             os.system("mpg123 output.mp3")
             
         except KeyboardInterrupt:
