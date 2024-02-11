@@ -18,6 +18,7 @@ def main():
     global sock
     tts = TTS()
     writer = FaceLcdWriter()
+    writer.open()
     while True:
         try:
             data = sock.recv(1024 * 1024)
@@ -33,6 +34,7 @@ def main():
         except KeyboardInterrupt:
             print("Exiting...")
             sock.close()
+            writer.close()
             break
 
 
