@@ -122,6 +122,8 @@ def main():
                         sock2.sendall(response.encode())
                                 
                         transcription = ['']
+                        
+                    print(line)
 
                 sleep(0.25)
         except KeyboardInterrupt:
