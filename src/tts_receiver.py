@@ -40,7 +40,8 @@ def main():
             response.write_to_file("output.mp3")
             time.sleep(0.75)
             sound = pyglet.media.load("output.mp3", streaming=False)
-            sound.play()
+            player = sound.play()
+            player.volume = 1.5
 
             # loop and do face stuff while its speaking
             lasttime = time.time()
