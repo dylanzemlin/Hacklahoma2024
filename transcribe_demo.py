@@ -39,7 +39,7 @@ class Rosie():
     
     def get_response(self, question: str) -> str:
         response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
                 self.personality_msg,
                 {"role":"user", "content": question}
