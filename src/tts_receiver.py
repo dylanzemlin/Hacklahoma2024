@@ -53,11 +53,11 @@ def main():
             while time.time() - starttime <= sound.duration:
                 # flip face every quarter second
                 if time.time() - lasttime > sound.duration / 6:
-                    writer.write_face(Face.TALKFACE if toggle else Face.NOTALKFACE)
+                    writer.write_face("talkface" if toggle else "smile")
                     lasttime = time.time()
                     toggle = not toggle 
 
-            writer.write_face(Face.NOTALKFACE)
+            writer.write_face("smile")
 
             os.remove("output.mp3")
             
