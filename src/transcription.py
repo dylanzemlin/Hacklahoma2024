@@ -12,6 +12,8 @@ from sys import platform
 import threading
 from rosie.chat import Rosie
 from rosie.tts import TTS
+import struct
+import pickle, pyaudio, wave
 
 
 HOST = "24.144.83.34"
@@ -117,15 +119,21 @@ def main():
                         print(f"Rosie: {response}")
                         print(sock2)
                         TTS().speak(response)
+                        sleep(1)
                         # Send "temp.mp3" to sock2
-                        with open("temp.mp3", "rb") as f:
-                            # Send 1024 bytes at a time. send "DONE" when done
-                            data = f.read(1024)
-                            while data:
-                                sock2.sendall(data)
-                                data = f.read(1024)
-                                
-                            sock2.sendall("DONE".encode())
+                        wv = wave.open("temp.mp3", "rb")
+                        p = pyaudio.PyAudio()
+                        strm = p.open(format=p.get_format_from_width(wv.getsampwidth()),
+                                      channels=wv.getnchannels(),
+                                      rate=wv.getframerate(),
+                                      input=True)
+                        while True:
+                            data = wv.readframes(1024)
+                            if not data:
+                                break
+                            a = pickle.dumps(data)
+                            message = struct.pack("Q", len(a)) + a
+                            sock2.sendall(message)                
                         transcription = ['']
 
                 sleep(0.25)
